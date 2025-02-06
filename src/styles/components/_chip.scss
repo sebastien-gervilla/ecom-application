@@ -1,0 +1,34 @@
+@use '../theme' as *;
+
+button.chip {
+    display: flex;
+    align-items: center;
+    gap: $size-8;
+
+    padding: $size-8 $size-12;
+
+    border-radius: $radius;
+
+    transition: .2s ease;
+
+    &:not(:disabled) {
+        &:hover, &:focus-visible {
+            background-color: $grey-100;
+    
+            transition: .2s ease;
+        }
+    }
+
+    &:disabled {
+        color: $grey-500;
+        
+        cursor: not-allowed;
+    }
+
+    svg {
+        width: 20px;
+        height: 20px;
+        
+        margin-left: -4px;
+    }
+}

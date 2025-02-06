@@ -1,0 +1,81 @@
+@use '@/styles/theme' as *;
+
+header {
+    position: sticky;
+    z-index: 1000;
+    top: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    padding: 16px;
+
+    background-color: $grey-0;
+
+    .left {
+        display: flex;
+        gap: 16px;
+    }
+
+    .right {
+        display: flex;
+        gap: 24px;
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .search-bar {
+            width: 250px;
+            padding: 8px 12px;
+
+            color: $grey-600;
+            border: 1px solid $grey-600;
+            border-radius: $radius;
+
+            text-align: left;
+            
+            transition: .2s ease;
+
+            &:hover, &:focus-visible {
+                color: $grey-900;
+                border-color: $grey-900;
+
+                transition: .2s ease;
+            }
+        }
+    }
+}
+
+.languages {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    padding: 8px;
+
+    .language {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        padding: 8px;
+
+        transition: .2s ease;
+
+        &:hover, &:focus-visible {
+            background-color: $grey-200;
+
+            transition: .2s ease;
+        }
+
+        img {
+            width: 24px;
+
+            overflow: hidden;
+        }
+    }
+}

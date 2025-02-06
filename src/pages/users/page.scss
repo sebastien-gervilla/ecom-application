@@ -1,0 +1,47 @@
+@use '@/styles/theme' as *;
+
+#users-page {
+    .users {
+        display: flex;
+        flex-direction: column;
+        
+        flex-grow: 1;
+
+        padding: 16px;
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            flex-grow: 1;
+
+            .header {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .table {
+                height: 60vh;
+                flex-grow: 1;
+
+                thead {
+                    position: sticky;
+                    top: 0;
+                }
+            }
+
+            .footer {
+                display: flex;
+                
+                .pagination {
+                    margin-left: auto;
+                }
+            }
+        }
+    }
+}
+
+.user-form {
+    width: 500px;
+}

@@ -1,0 +1,66 @@
+@use '@/styles/theme' as *;
+
+.select-options {
+    position: absolute;
+
+    // These are initial values, that are later modified by the component
+    display: none;
+    top: 0;
+    left: 0;
+
+    z-index: 10000;
+
+    padding: 8px;
+
+    overflow-y: auto;
+
+    border-radius: $radius;
+    background-color: $grey-0;
+    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.15);
+
+    transform: translateY(8px);
+
+    animation: options-open .1s;
+
+    .option {
+        display: flex;
+        align-items: center;
+
+        padding: 8px;
+
+        border-radius: $radius;
+        
+        transition: .2s ease;
+
+        &:hover, &:focus-visible {
+            background-color: $grey-100;
+
+            cursor: pointer;
+            transition: .2s ease-out;
+        }
+
+        &.selected {
+            background-color: $main-100;
+
+            &:hover, &:focus-visible {
+                background-color: $main-200;
+            }
+        }
+    }
+
+    .empty-option {
+        padding: 8px;
+    }
+}
+
+@keyframes options-open {
+    0% {
+        opacity: 50%;
+        transform: translateY(8px) scale(99%);
+    }
+
+    100% {
+        opacity: 100%;
+        transform: translateY(8px) scale(100%);
+    }
+}

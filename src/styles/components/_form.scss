@@ -1,0 +1,49 @@
+@use '../theme' as *;
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    min-width: 200px;
+    padding: 32px;
+
+    h3 {
+        margin-bottom: $size-16;
+
+        font-size: $size-24;
+        font-weight: 600;
+    }
+
+    .row {
+        display: flex;
+        gap: 24px;
+
+        &.footer {
+            justify-content: space-between;
+
+            margin-top: $size-16;
+        }
+    }
+
+    .section {
+        display: flex;
+        flex-direction: column;
+        gap: $size-16;
+
+        h4 {
+            font-size: $size-16;
+            font-weight: 500;
+        }
+    }
+
+    // TODO: Have all form fields with a common className
+    .form-field, .select, .tag-select, .conversion-field, .search-select {
+        flex-basis: 0px;
+        flex-grow: 1;
+    }
+
+    button.submit {
+        margin-left: auto;
+    }
+}

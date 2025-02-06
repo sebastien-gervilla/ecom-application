@@ -1,0 +1,24 @@
+.loader-wrapper {
+    position: relative;
+
+    .circle {
+        position: absolute;
+        inset: 0;
+    }
+
+    &.show {
+        & > * {
+            visibility: visible;
+        }
+    }
+
+    &.hide {
+        & > * {
+            visibility: hidden;
+
+            &.circle {
+                visibility: visible;
+            }
+        }
+    }
+}

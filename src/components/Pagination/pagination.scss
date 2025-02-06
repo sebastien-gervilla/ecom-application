@@ -1,0 +1,36 @@
+@use '@/styles/theme' as *;
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    button {
+        width: 36px;
+        height: 36px;
+
+        font-weight: 500;
+
+        &.page {
+            &:disabled {
+                color: $grey-700;
+                background-color: $grey-100;
+    
+                &:hover, &:focus-visible {
+                    color: $grey-700;
+                    background-color: $grey-100;
+                }
+            }
+        }
+    }
+
+    .rest {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+
+        width: 36px;
+        height: 36px;
+        padding: 8px;
+    }
+}

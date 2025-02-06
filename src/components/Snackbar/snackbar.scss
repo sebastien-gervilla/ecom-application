@@ -1,0 +1,25 @@
+@use '@/styles/theme' as *;
+@use '@/styles/animations' as *;
+
+.snackbar {
+    position: absolute;
+    left: 32px;
+    bottom: 32px;
+
+    display: flex;
+    align-items: center;
+
+    z-index: 10000;
+
+    overflow: hidden;
+
+    animation: $pop-up-animation;
+
+    .icon-button {
+        color: inherit;
+        
+        &:hover, &:focus-visible {
+            background-color: rgba(0, 0, 0, .1);
+        }
+    }
+}

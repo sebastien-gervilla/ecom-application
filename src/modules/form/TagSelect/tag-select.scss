@@ -1,0 +1,140 @@
+@use '@/styles/theme' as *;
+
+.tag-select {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    
+    width: 200px;
+
+    label {
+        font-weight: 500;
+    }
+
+    .select-button {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        height: $form-field-size;
+        padding: 6px 12px;
+        padding-right: 8px;
+
+        border: 1px solid $grey-300;
+        border-radius: $radius;
+
+        transition: .2s ease;
+
+        &:hover {
+            border-color: $grey-700;
+
+            transition: .2s ease;
+        }
+
+        svg {
+            color: $grey-700;
+        }
+
+        .selected-values {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+
+            flex-grow: 1;
+            height: 100%;
+            max-width: calc(100% - 24px);
+
+            .selected-value {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+
+                max-width: 100%;
+
+                background-color: $grey-100;
+                border-radius: $radius;
+
+                p {
+                    padding-left:8px;
+
+                    max-width: 100%;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow-x: hidden;
+                }
+
+                .remove-button {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    border: none;
+                    background-color: transparent;
+                    
+                    width: 24px;
+                    height: 24px;
+
+                    svg {
+                        width: 20px;
+                        height: 20px;
+                    }
+
+                    &:hover {
+                        cursor: pointer;
+                        background-color: $red-200;
+
+                        svg {
+                            color: $red-700;
+                        }
+                    }
+                }
+            }
+
+            .input-wrapper {
+                display: flex;
+                align-items: center;
+                flex-grow: 1;
+
+                min-width: 20%;
+                // margin-bottom: 4px;
+                // margin-right: 4px;
+
+                cursor: text;
+
+                input {
+                    flex-grow: 1;
+                    
+                    width: 0;
+                    height: 100%;
+
+                    border: none;
+                    outline: none;
+                    background-color: transparent;
+
+                    font-size: 14px;
+                    cursor: text;
+                }
+            }
+        }
+
+        .select-icon-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+            transition: .2s ease;
+        }
+    }
+
+    &.active {
+        .select-button {
+            border-color: $grey-700;
+        }
+    }
+}

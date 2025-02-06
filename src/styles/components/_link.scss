@@ -1,0 +1,13 @@
+@use '../theme' as *;
+
+a.animated {
+    color: $grey-700;
+
+    transition: .2s ease;
+
+    &:hover, &:focus-visible {
+        color: $grey-1000;
+
+        transition: .2s ease;
+    }
+}

@@ -1,0 +1,97 @@
+@use '@/styles/theme' as *;
+
+#on-sale-page {
+    .products-wrapper {
+        display: flex;
+        flex-direction: column;
+        
+        flex-grow: 1;
+
+        padding: 16px;
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            flex-grow: 1;
+
+            .header {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .products {
+                display: flex;
+                align-items: flex-start;
+                flex-wrap: wrap;
+                gap: 16px;
+
+                flex-grow: 1;
+
+                .product {
+                    width: 250px;
+
+                    border: 1px solid $grey-300;
+                    border-radius: $radius-8;
+
+                    overflow: hidden;
+
+                    cursor: pointer;
+                    transition: .2s ease;
+
+                    &:hover {
+                        border-color: $grey-700;
+
+                        transition: .2s ease;
+                    }
+
+                    img {
+                        width: 100%;
+                    }
+
+                    .informations {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 16px;
+
+                        padding: 16px;
+
+                        background-color: $grey-100;
+
+                        .top {
+                            display: flex;
+                            justify-content: space-between;
+
+                            p.name {
+                                font-size: $size-18;
+                                font-weight: 500;
+                            }
+
+                            p.price {
+                                font-size: $size-18;
+                                font-weight: 300;
+                            }
+                        }
+
+                        p.description {
+                            color: $grey-700;
+                        }
+                    }
+                }
+            }
+
+            .footer {
+                display: flex;
+                
+                .pagination {
+                    margin-left: auto;
+                }
+            }
+        }
+    }
+}
+
+.user-form {
+    width: 500px;
+}

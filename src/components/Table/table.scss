@@ -1,0 +1,59 @@
+@use '@/styles/theme' as *;
+
+.table {
+    position: relative;
+    
+    width: 100%;
+    
+    overflow: auto;
+
+    table {
+        width: 100%;
+    
+        font-size: $size-16;
+        line-height: $size-20;
+    
+        caption-side: bottom;
+        border-collapse: collapse;
+    
+        thead {
+            color: $grey-600;
+    
+            tr {
+                background-color: $grey-0;
+                border-bottom: 1px solid $grey-200;
+    
+                th {
+                    height: $size-40;
+                    padding: 0 $size-8;
+    
+                    text-align: left;
+                    font-weight: 500;
+                }
+            }
+        }
+    
+        tbody {
+            tr {
+                border-bottom: 1px solid $grey-200;
+    
+                td {
+                    padding: $size-8;
+    
+                    text-align: left;
+                    line-height: $size-20;
+                }
+            }
+        }
+    
+        tr {
+            transition: .3s ease;
+    
+            &:hover {
+                background-color: $grey-50;
+    
+                transition: .15s ease;
+            }
+        }
+    }
+}
