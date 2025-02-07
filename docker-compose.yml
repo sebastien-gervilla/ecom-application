@@ -6,4 +6,4 @@ services:
     env_file:
       - ./.env
     ports:
-      - "6000:6000"
+      - "5000:5000"
