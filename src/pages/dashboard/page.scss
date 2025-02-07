@@ -1,0 +1,54 @@
+@use '@/styles/theme' as *;
+
+#dashboard-page {
+    .statistics {
+        display: flex;
+        flex-direction: column;
+        gap: 48px;
+
+        padding: 16px;
+
+        .cards {
+            display: flex;
+            gap: 48px;
+
+            .card {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+
+                width: 210px;
+                padding: 16px;
+
+                border: 2px solid $grey-300;
+                border-radius: $radius-8;
+
+                h3 {
+                    text-align: center;
+                }
+
+                &.low {
+                    border-color: $red-300;
+                }
+
+                &.total-orders, &.stock-card {
+                    p {
+                        font-size: $size-20;
+                        text-align: center;
+                    }
+                }
+            }
+
+            .separator {
+                width: 1px;
+                height: 100%;
+
+                background-color: $grey-300;
+            }
+        }
+
+        .bar-chart {
+            display: flex;
+        }
+    }
+}

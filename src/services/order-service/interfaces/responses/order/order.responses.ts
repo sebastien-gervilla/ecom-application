@@ -18,6 +18,15 @@ export interface Get extends HttpResponses {
     }
 }
 
+export interface GetStatistics extends HttpResponses {
+    200: {
+        data: Models.Order.GetStatistics;
+    };
+    400: {
+        errors: []
+    }
+}
+
 export interface Post extends HttpResponses {
     201: never;
     409: {

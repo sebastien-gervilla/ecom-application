@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // Application
 import {
-    Home, Login, OnSale, MyOrders, Products, Orders, Register, Users
+    Home, Login, OnSale, MyOrders, Products, Orders, Register, Users, Dashboard
 } from '@/pages';
 import { Page } from './router.types';
 import ProtectedRoute from './ProtectedRoute';
@@ -23,6 +23,7 @@ const Router: FC = () => {
                     <Route path={Page.OnSale} element={<OnSale />} />
                     <Route path={Page.MyOrders} element={<MyOrders />} />
 
+                    <Route path={Page.Dashboard} element={<Dashboard />} />
                     <Route path={Page.Products} element={<Products />} />
                     <Route path={Page.Orders} element={<Orders />} />
                     <Route path={Page.Users} element={<Users />} />
