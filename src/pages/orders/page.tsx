@@ -1,4 +1,6 @@
 // Librairies
+import { MouseEvent } from 'react';
+import { CircleX, EllipsisVertical, Truck } from 'lucide-react';
 
 // Applications
 import './page.scss';
@@ -6,8 +8,6 @@ import { Confirmation, Header, LoaderWrapper, Modal, PageLayout, Pagination, Pop
 import { useRequest, useLocalStorage, useModal, usePagination, usePopover } from '@/hooks';
 import { orderService, OrderService } from '@/services/order-service';
 import { Column, DataTable } from '@/modules/data-table';
-import { EllipsisVertical, PencilIcon, Trash2 } from 'lucide-react';
-import { MouseEvent } from 'react';
 
 const OrdersScreen = () => {
 
@@ -44,54 +44,42 @@ const Orders = () => {
         pageSize: pageSizeOptions[0],
     });
 
-    const productsResponse = useRequest<OrderService.Responses.Product.Get>({
-        request: (controller) => orderService.products.get(controller, pagination.model),
+    const ordersResponse = useRequest<OrderService.Responses.Order.Get>({
+        request: (controller) => orderService.orders.get(controller, pagination.model),
         dependencies: [pagination.model.page, pagination.model.pageSize]
     });
-    const products = productsResponse.response?.is(200) ? productsResponse.response.body.data : [];
-    const pages = productsResponse.response?.is(200) ? productsResponse.response.body.meta.pagination.pages : 0;
+    const orders = ordersResponse.response?.is(200) ? ordersResponse.response.body.data : [];
+    const pages = ordersResponse.response?.is(200) ? ordersResponse.response.body.meta.pagination.pages : 0;
 
-    const handleOpenActionsMenu = (product: OrderService.Models.Product.Get, event: MouseEvent<HTMLButtonElement>) => {
+    const handleOpenActionsMenu = (order: OrderService.Models.Order.Get, event: MouseEvent<HTMLButtonElement>) => {
         popover.openFrom(event.currentTarget, (
             <div className="action-menu menu">
                 <button
                     className='menu-item'
-                    onClick={() => handleEditProduct(product)}
+                    onClick={() => handleShipProduct(order)}
                 >
-                    <PencilIcon />
-                    Modifier
+                    <Truck />
+                    Expédier la commande
                 </button>
                 <button
                     className='menu-item'
-                    onClick={() => handleDeleteProduct(product)}
+                    onClick={() => handleCancelOrder(order)}
                 >
-                    <Trash2 />
-                    Supprimer
+                    <CircleX />
+                    Annuler la commande
                 </button>
             </div>
         ));
     }
 
-    const handleNewProduct = () => {
-        modal.openWith(
-            null
-        );
-    }
-
-    const handleEditProduct = (_: OrderService.Models.Product.Get) => {
-        modal.openWith(
-            null
-        );
-    }
-
-    const handleDeleteProduct = (product: OrderService.Models.Product.Get) => {
+    const handleShipProduct = (order: OrderService.Models.Order.Get) => {
         modal.openWith(
             <Confirmation
                 onValidate={async () => {
-                    const response = await orderService.products.delete(product.id);
+                    const response = await orderService.orders.ship(order.id);
                     if (response.is(204)) {
                         modal.close();
-                        return productsResponse.refresh();
+                        return ordersResponse.refresh();
                     }
                 }}
                 onCancel={modal.close}
@@ -99,31 +87,40 @@ const Orders = () => {
         );
     }
 
-    const columns: Column<OrderService.Models.Product.Get>[] = [
+    const handleCancelOrder = (order: OrderService.Models.Order.Get) => {
+        modal.openWith(
+            <Confirmation
+                onValidate={async () => {
+                    const response = await orderService.orders.cancel(order.id);
+                    if (response.is(204)) {
+                        modal.close();
+                        return ordersResponse.refresh();
+                    }
+                }}
+                onCancel={modal.close}
+            />
+        );
+    }
+
+    const getStatusChip = (s: OrderService.Models.Order.Status) => {
+        const status = statuses[s];
+        return (
+            <div className="status-chip chip">
+                <p style={{ backgroundColor: status.color }}>{status.name}</p>
+            </div>
+        );
+    }
+
+    const columns: Column<OrderService.Models.Order.Get>[] = [
         {
-            key: 'name',
-            header: 'Nom',
-            cell: ({ row }) => row.name,
+            key: 'id',
+            header: 'Identifiant',
+            cell: ({ row }) => row.id,
         },
         {
-            key: 'reference',
-            header: 'Référence',
-            cell: ({ row }) => row.reference,
-        },
-        {
-            key: 'description',
-            header: 'Description',
-            cell: ({ row }) => row.description,
-        },
-        {
-            key: 'price',
-            header: 'Price',
-            cell: ({ row }) => row.price,
-        },
-        {
-            key: 'stock',
-            header: 'Stock',
-            cell: ({ row }) => row.stock,
+            key: 'status',
+            header: 'Statut',
+            cell: ({ row }) => getStatusChip(row.status),
         },
         {
             key: 'stock',
@@ -140,7 +137,7 @@ const Orders = () => {
     ];
 
     return (
-        <LoaderWrapper className='products-wrapper' isLoading={productsResponse.isLoading}>
+        <LoaderWrapper className='orders-wrapper' isLoading={ordersResponse.isLoading}>
             <Popover
                 {...popover}
                 position={{
@@ -163,16 +160,10 @@ const Orders = () => {
                     <div className="filters">
 
                     </div>
-                    <button
-                        className='animated'
-                        onClick={handleNewProduct}
-                    >
-                        Nouveau produit
-                    </button>
                 </div>
-                <div className="products">
+                <div className="orders">
                     <DataTable
-                        rows={products}
+                        rows={orders}
                         columns={columns}
                         getRowId={row => row.id}
                     />
@@ -187,6 +178,26 @@ const Orders = () => {
             </div>
         </LoaderWrapper>
     );
+}
+
+const statuses: {
+    [status in OrderService.Models.Order.Status]: {
+        name: string;
+        color: string;
+    };
+} = {
+    'shipped': {
+        name: 'Shipped',
+        color: '#9af07e'
+    },
+    'in_progress': {
+        name: 'In progress',
+        color: '#f7d2a1'
+    },
+    'canceled': {
+        name: 'Canceled',
+        color: '#f7a1a1'
+    },
 }
 
 const pageSizeOptions = [50, 100, 200];

@@ -6,6 +6,7 @@ import './page.scss';
 import { Header, LoaderWrapper, Modal, PageLayout, Pagination, Popover } from '@/components';
 import { useRequest, useLocalStorage, useModal, usePagination, usePopover } from '@/hooks';
 import { orderService, OrderService } from '@/services/order-service';
+import { ProductSheet } from '../products/components';
 
 const OnSaleScreen = () => {
 
@@ -49,6 +50,15 @@ const Products = () => {
     const products = productsResponse.response?.is(200) ? productsResponse.response.body.data : [];
     const pages = productsResponse.response?.is(200) ? productsResponse.response.body.meta.pagination.pages : 0;
 
+    const handleShowProductSheet = (product: OrderService.Models.Product.Get) => {
+        modal.openWith(
+            <ProductSheet
+                product={product}
+                onBack={modal.close}
+            />
+        );
+    }
+
     const displayProducts = () => {
         let displayed: JSX.Element[] = [];
         for (const product of products) {
@@ -56,11 +66,7 @@ const Products = () => {
                 <div
                     key={product.id}
                     className="product"
-                    onClick={() => window.open(
-                        `/products/${product.id}`,
-                        '_blank',
-                        'noreferrer'
-                    )}
+                    onClick={() => handleShowProductSheet(product)}
                 >
                     <img
                         src='/product-placeholder.png'

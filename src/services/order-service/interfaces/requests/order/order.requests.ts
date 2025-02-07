@@ -11,3 +11,7 @@ export interface Get extends HttpRequest {
 export interface Post extends HttpRequest {
     body: Models.Order.Create[];
 }
+
+export interface Ship extends HttpRequest { }
+
+export interface Cancel extends HttpRequest { }

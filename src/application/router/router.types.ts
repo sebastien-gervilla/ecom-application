@@ -8,6 +8,7 @@ export enum Page {
 
     OnSale = '/on-sale',
 
+    Orders = '/orders',
     Products = '/products',
     Users = '/users',
 }

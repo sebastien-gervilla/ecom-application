@@ -82,7 +82,7 @@ const Products = () => {
 
     const handleShowProduct = (product: OrderService.Models.Product.Get) => {
         modal.openWith(
-            <ProductSheet product={product} />
+            <ProductSheet product={product} onBack={modal.close} />
         )
     }
 

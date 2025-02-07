@@ -24,3 +24,17 @@ export interface Post extends HttpResponses {
         error: string;
     }
 }
+
+export interface Ship extends HttpResponses {
+    204: never;
+    409: {
+        error: string;
+    }
+}
+
+export interface Cancel extends HttpResponses {
+    204: never;
+    409: {
+        error: string;
+    }
+}

@@ -4,6 +4,7 @@ export interface Get {
     id: number;
     products: Models.OrderProduct.Get[];
     status: Status;
+    total: number;
 }
 
 export interface Create {

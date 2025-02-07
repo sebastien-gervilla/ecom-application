@@ -19,3 +19,6 @@ export { default as Users } from "./users/page";
 
 // Products
 export { default as Products } from "./products/page";
+
+// Products
+export { default as Orders } from "./orders/page";

@@ -9,9 +9,10 @@ import { ApplicationStorage, Storage } from '@/helpers/storage';
 
 interface Props {
     product: OrderService.Models.Product.Get;
+    onBack: () => void;
 }
 
-const ProductSheet: FC<Props> = ({ product }) => {
+const ProductSheet: FC<Props> = ({ product, onBack }) => {
 
     const [quantity, setQuantity] = useState(1);
 
@@ -39,14 +40,24 @@ const ProductSheet: FC<Props> = ({ product }) => {
 
     return (
         <div className='product-sheet'>
-            <img
-                src='/product-placeholder.png'
-                alt='Product placeholder'
-            />
-            <div className="informations">
-                <p className='name'>{product.name}</p>
-                <p className='price'>{product.price}€</p>
-                <p className='description'>{product.description}</p>
+            <div className="sheet">
+                <img
+                    src='/product-placeholder.png'
+                    alt='Product placeholder'
+                />
+                <div className="informations">
+                    <p className='name'>{product.name}</p>
+                    <p className='price'>{product.price}€</p>
+                    <p className='description'>{product.description}</p>
+                </div>
+            </div>
+            <div className="footer">
+                <button
+                    className='animated text ghost'
+                    onClick={onBack}
+                >
+                    Retour
+                </button>
                 <div className="actions">
                     <Form.NumberField
                         name='quantity'
