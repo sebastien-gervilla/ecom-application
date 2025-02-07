@@ -76,6 +76,10 @@
 
                         p.description {
                             color: $grey-700;
+                            height: 63px;
+                            max-height: 63px;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
                         }
                     }
                 }

@@ -1,0 +1,51 @@
+@use '@/styles/theme' as *;
+
+#my-orders-page {
+    .orders-wrapper {
+        display: flex;
+        flex-direction: column;
+        
+        flex-grow: 1;
+
+        padding: 16px;
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            flex-grow: 1;
+
+            .header {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .orders {
+                flex-grow: 1;
+
+                .status-chip {
+                    display: flex;
+
+                    p {
+                        padding: 4px 8px;
+                        border-radius: 8px;
+                        font-weight: 500;
+                    }
+                }
+            }
+
+            .footer {
+                display: flex;
+                
+                .pagination {
+                    margin-left: auto;
+                }
+            }
+        }
+    }
+}
+
+.user-form {
+    width: 500px;
+}

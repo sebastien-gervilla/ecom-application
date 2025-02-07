@@ -14,6 +14,9 @@ export { default as Register } from "./register/page";
 // OnSale
 export { default as OnSale } from "./on-sale/page";
 
+// MyOrders
+export { default as MyOrders } from "./my-orders/page";
+
 // Users
 export { default as Users } from "./users/page";
 

@@ -5,7 +5,7 @@ import { FC, useState } from 'react';
 import './product-sheet.scss';
 import { OrderService } from '@/services/order-service';
 import { Form } from '@/modules/form';
-import { ApplicationStorage, Storage } from '@/helpers/storage';
+import { useCart } from '@/hooks';
 
 interface Props {
     product: OrderService.Models.Product.Get;
@@ -13,6 +13,8 @@ interface Props {
 }
 
 const ProductSheet: FC<Props> = ({ product, onBack }) => {
+
+    const { cart, setCart } = useCart();
 
     const [quantity, setQuantity] = useState(1);
 
@@ -24,18 +26,13 @@ const ProductSheet: FC<Props> = ({ product, onBack }) => {
             quantity,
         };
 
-        const currentCartString = Storage.get('cart');
-        if (!currentCartString)
-            return Storage.set('cart', [addedProduct])
-
-        const currentCart: ApplicationStorage['cart'] = JSON.parse(currentCartString);
-        const cartProduct = currentCart.find(p => p.id === product.id);
+        const cartProduct = cart.find(p => p.id === product.id);
         if (!cartProduct)
-            currentCart.push(addedProduct);
+            cart.push(addedProduct);
         else
             cartProduct.quantity = addedProduct.quantity;
 
-        Storage.set('cart', currentCart);
+        setCart([...cart]);
     }
 
     return (

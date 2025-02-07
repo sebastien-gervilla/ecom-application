@@ -158,8 +158,8 @@ const Products = () => {
             cell: ({ row }) => row.stock,
         },
         {
-            key: 'stock',
-            header: 'Stock',
+            key: 'actions',
+            header: 'Actions',
             cell: ({ row }) => (
                 <button
                     className='icon-button'

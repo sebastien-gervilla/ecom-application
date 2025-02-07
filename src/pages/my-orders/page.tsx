@@ -1,16 +1,15 @@
 // Librairies
-import { MouseEvent } from 'react';
-import { CircleX, EllipsisVertical, FileText, Truck } from 'lucide-react';
+import { FileText } from 'lucide-react';
 
 // Applications
 import './page.scss';
-import { Confirmation, Header, LoaderWrapper, Modal, PageLayout, Pagination, Popover } from '@/components';
+import { Header, LoaderWrapper, Modal, PageLayout, Pagination, Popover } from '@/components';
 import { useRequest, useLocalStorage, useModal, usePagination, usePopover } from '@/hooks';
 import { orderService, OrderService } from '@/services/order-service';
 import { Column, DataTable } from '@/modules/data-table';
-import { OrderProducts } from './components';
+import { OrderProducts } from '../orders/components';
 
-const OrdersScreen = () => {
+const MyOrdersScreen = () => {
 
     const [isReduced, setIsReduced] = useLocalStorage('is-sidebar-reduced', false);
 
@@ -24,9 +23,9 @@ const OrdersScreen = () => {
                     title: 'Accueil',
                     permission: null,
                 }, {
-                    to: '/orders',
-                    title: 'Commandes',
-                    permission: OrderService.Models.User.Role.ADMINISTRATOR,
+                    to: '/my-orders',
+                    title: 'Mes commandes',
+                    permission: OrderService.Models.User.Role.CLIENT,
                 }]}
                 toggleSidebar={handleToggleSidebar}
             />
@@ -46,75 +45,17 @@ const Orders = () => {
     });
 
     const ordersResponse = useRequest<OrderService.Responses.Order.Get>({
-        request: (controller) => orderService.orders.get(controller, pagination.model),
+        request: (controller) => orderService.orders.getCurrent(controller, pagination.model),
         dependencies: [pagination.model.page, pagination.model.pageSize]
     });
     const orders = ordersResponse.response?.is(200) ? ordersResponse.response.body.data : [];
     const pages = ordersResponse.response?.is(200) ? ordersResponse.response.body.meta.pagination.pages : 0;
-
-    const handleOpenActionsMenu = (order: OrderService.Models.Order.Get, event: MouseEvent<HTMLButtonElement>) => {
-        popover.openFrom(event.currentTarget, (
-            <div className="action-menu menu">
-                <button
-                    className='menu-item'
-                    onClick={() => handleShowOrder(order)}
-                >
-                    <FileText />
-                    Voir les articles
-                </button>
-                <button
-                    className='menu-item'
-                    onClick={() => handleShipOrder(order)}
-                >
-                    <Truck />
-                    Expédier la commande
-                </button>
-                <button
-                    className='menu-item'
-                    onClick={() => handleCancelOrder(order)}
-                >
-                    <CircleX />
-                    Annuler la commande
-                </button>
-            </div>
-        ));
-    }
 
     const handleShowOrder = (order: OrderService.Models.Order.Get) => {
         modal.openWith(
             <OrderProducts
                 order={order}
                 onBack={modal.close}
-            />
-        );
-    }
-
-    const handleShipOrder = (order: OrderService.Models.Order.Get) => {
-        modal.openWith(
-            <Confirmation
-                onValidate={async () => {
-                    const response = await orderService.orders.ship(order.id);
-                    if (response.is(204)) {
-                        modal.close();
-                        return ordersResponse.refresh();
-                    }
-                }}
-                onCancel={modal.close}
-            />
-        );
-    }
-
-    const handleCancelOrder = (order: OrderService.Models.Order.Get) => {
-        modal.openWith(
-            <Confirmation
-                onValidate={async () => {
-                    const response = await orderService.orders.cancel(order.id);
-                    if (response.is(204)) {
-                        modal.close();
-                        return ordersResponse.refresh();
-                    }
-                }}
-                onCancel={modal.close}
             />
         );
     }
@@ -146,13 +87,13 @@ const Orders = () => {
         },
         {
             key: 'actions',
-            header: 'Actions',
+            header: 'Voir les articles',
             cell: ({ row }) => (
                 <button
                     className='icon-button'
-                    onClick={(event) => handleOpenActionsMenu(row, event)}
+                    onClick={() => handleShowOrder(row)}
                 >
-                    <EllipsisVertical />
+                    <FileText />
                 </button>
             ),
         },
@@ -224,4 +165,4 @@ const statuses: {
 
 const pageSizeOptions = [50, 100, 200];
 
-export default OrdersScreen;
+export default MyOrdersScreen;

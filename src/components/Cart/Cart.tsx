@@ -3,8 +3,9 @@ import { FC } from 'react';
 
 // Application
 import './cart.scss';
-import { ApplicationStorage, Storage } from '@/helpers/storage';
 import { orderService } from '@/services/order-service';
+import { useCart } from '@/hooks';
+import { CircleX, Minus, Plus } from 'lucide-react';
 
 interface Props {
     onSuccess: () => void;
@@ -14,23 +15,61 @@ interface Props {
 
 const Cart: FC<Props> = ({ onSuccess, onFailure, onBack }) => {
 
-    const products = getCartProducts();
-    const total = products.reduce((a, b) => a + b.price * b.quantity, 0);
+    const { cart, setCart } = useCart();
+
+    const total = cart.reduce((a, b) => a + b.price * b.quantity, 0);
 
     const handleOrder = async () => {
-        const response = await orderService.orders.create(products);
+        const response = await orderService.orders.create(cart);
         return response.is(201)
             ? onSuccess()
             : onFailure();
     }
 
+    const handleChangeProductQuantity = (product: (typeof cart)[number], newQuantity: number) => {
+        if (newQuantity <= 0)
+            return;
+
+        setCart(
+            cart.map(
+                p => p.id === product.id
+                    ? { ...p, quantity: newQuantity }
+                    : p
+            )
+        )
+    }
+
+    const handleRemoveProduct = (product: (typeof cart)[number]) => {
+        setCart(cart.filter(p => p.id !== product.id));
+    }
+
     const displayProducts = () => {
-        return products.map(product => (
+        return cart.map(product => (
             <div key={product.id} className="product">
                 <p className='name'>{product.name}</p>
                 <p className='quantity'>{product.quantity}</p>
                 <p className='price'>{product.price}€</p>
                 <p className='total'>{product.price * product.quantity}€</p>
+                <div className="product-actions">
+                    <button
+                        className='icon-button'
+                        onClick={() => handleChangeProductQuantity(product, product.quantity + 1)}
+                    >
+                        <Plus />
+                    </button>
+                    <button
+                        className='icon-button'
+                        onClick={() => handleChangeProductQuantity(product, product.quantity - 1)}
+                    >
+                        <Minus />
+                    </button>
+                    <button
+                        className='icon-button destructive'
+                        onClick={() => handleRemoveProduct(product)}
+                    >
+                        <CircleX />
+                    </button>
+                </div>
             </div>
         ));
     }
@@ -45,7 +84,11 @@ const Cart: FC<Props> = ({ onSuccess, onFailure, onBack }) => {
                     <p className='price'>Prix</p>
                     <p className='total'>Total</p>
                 </div>
-                {displayProducts()}
+                {cart.length ? displayProducts() : (
+                    <div className="product">
+                        <p>Panier vide</p>
+                    </div>
+                )}
             </div>
             <div className="order-total">
                 <p>Total de la commande</p>
@@ -67,16 +110,6 @@ const Cart: FC<Props> = ({ onSuccess, onFailure, onBack }) => {
             </div>
         </div>
     );
-}
-
-const getCartProducts = (): ApplicationStorage['cart'] => {
-    const cartString = Storage.get('cart');
-    if (!cartString)
-        return [];
-
-    const cart: ApplicationStorage['cart'] = JSON.parse(cartString);
-
-    return cart;
 }
 
 export default Cart;

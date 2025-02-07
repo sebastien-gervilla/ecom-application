@@ -45,6 +45,20 @@
             padding: 16px 0;
 
             border-top: 1px solid $grey-300;
+
+            .product-actions {
+                display: flex;
+                gap: 8px;
+                
+                button.icon-button {
+                    padding: 4px;
+                    
+                    svg {
+                        width: 16px;
+                        height: 16px;
+                    }
+                }
+            }
         }
     }
 

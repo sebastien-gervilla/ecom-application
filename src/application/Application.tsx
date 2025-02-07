@@ -6,13 +6,16 @@ import '@/styles/index.scss';
 import Router from './router/Router';
 import { AuthenticationContextProvider } from '@/contexts/AuthenticationContext';
 import { ThemeContextProvider } from '@/contexts/ThemeContext';
+import { CartContextProvider } from '@/contexts/CartContext';
 
 const Application: FC = () => {
     return (
         <div className='application'>
             <ThemeContextProvider>
                 <AuthenticationContextProvider>
-                    <Router />
+                    <CartContextProvider>
+                        <Router />
+                    </CartContextProvider>
                 </AuthenticationContextProvider>
             </ThemeContextProvider>
         </div>

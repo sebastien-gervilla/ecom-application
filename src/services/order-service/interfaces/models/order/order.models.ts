@@ -1,8 +1,15 @@
-import { Models } from "@/services/order-service/interfaces";
-
 export interface Get {
     id: number;
-    products: Models.OrderProduct.Get[];
+    products: {
+        id: number;
+        name: string;
+        reference: string;
+        description: string;
+        price: number;
+        stock: number;
+        url: string;
+        quantity: number;
+    }[];
     status: Status;
     total: number;
 }

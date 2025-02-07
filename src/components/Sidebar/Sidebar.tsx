@@ -3,8 +3,9 @@ import { useAuthentication, useModal, usePopover } from '@/hooks';
 import { FC, MouseEvent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import {
-    Coffee, Command, Copyright, FileText,
-    Grid2X2, LogOut, MoveRight, User, Users
+    ChartArea,
+    Coffee, Command, FileText,
+    House, LogOut, Logs, MoveRight, Tag, User, Users
 } from 'lucide-react';
 
 // Application
@@ -196,22 +197,17 @@ const clientTabs: Tabs = [
     {
         path: '/',
         name: 'Accueil',
-        icon: <FileText />,
+        icon: <House />,
     },
     {
         path: '/on-sale',
         name: 'En vente',
-        icon: <Grid2X2 />,
+        icon: <Tag />,
     },
     {
         path: '/my-orders',
         name: 'Mes commandes',
-        icon: <Grid2X2 />,
-    },
-    {
-        path: '/my-cart',
-        name: 'Mon panier',
-        icon: <Copyright />,
+        icon: <Logs />,
     },
 ];
 
@@ -219,7 +215,7 @@ const administrationTabs: Tabs = [
     {
         path: '/dashboard',
         name: 'Dashboard',
-        icon: <Copyright />,
+        icon: <ChartArea />,
         requiresAdministrator: true,
     },
     {
@@ -231,7 +227,7 @@ const administrationTabs: Tabs = [
     {
         path: '/orders',
         name: 'Commandes',
-        icon: <Grid2X2 />,
+        icon: <Logs />,
         requiresAdministrator: true,
     },
     {

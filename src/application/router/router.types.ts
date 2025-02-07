@@ -7,6 +7,7 @@ export enum Page {
     Home = '/',
 
     OnSale = '/on-sale',
+    MyOrders = '/my-orders',
 
     Orders = '/orders',
     Products = '/products',
