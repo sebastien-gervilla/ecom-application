@@ -6,6 +6,7 @@ import './page.scss';
 import { Form, FormHandler } from '@/modules/form';
 import { OrderService, orderService } from '@/services/order-service';
 import { Coffee } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const RegisterPage: FC = () => {
 
@@ -76,6 +77,9 @@ const RegisterPage: FC = () => {
                     >
                         Validate
                     </button>
+                    <p style={{ display: 'flex', gap: 8 }}>
+                        Déjà inscrit ? <Link to='/login' style={{ textDecoration: 'underline' }}>Se connecter</Link>
+                    </p>
                 </div>
             </div>
         </section>
