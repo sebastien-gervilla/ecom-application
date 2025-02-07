@@ -6,13 +6,14 @@ import './header.scss';
 import { Path } from '../Breadcrumbs/Breadcrumbs.types';
 import { Moon, PanelLeft, ShoppingCart, Sun } from 'lucide-react';
 import { Breadcrumbs } from '../Breadcrumbs';
-import { useCart, useModal, usePopover } from '@/hooks';
+import { useCart, useModal, usePopover, useToast } from '@/hooks';
 import { ThemeContext } from '@/contexts/ThemeContext';
 import { Popover } from '../Popover';
 import { Search } from '../Search';
 import { Modal } from '../Modal';
 import { Cart } from '../Cart';
 import { ApplicationStorage } from '@/helpers/storage';
+import { Toast } from '../Toast';
 
 interface Props {
     path: Path;
@@ -21,6 +22,7 @@ interface Props {
 
 const Header: FC<Props> = ({ path, toggleSidebar }) => {
 
+    const toast = useToast();
     const modal = useModal();
     const popover = usePopover();
 
@@ -35,9 +37,10 @@ const Header: FC<Props> = ({ path, toggleSidebar }) => {
             <Cart
                 onSuccess={() => {
                     modal.close();
+                    toast.openDefaultSuccess();
                     setCart([]);
                 }}
-                onFailure={() => { }}
+                onFailure={() => toast.openDefaultFailure()}
                 onBack={modal.close}
             />
         );
@@ -71,6 +74,7 @@ const Header: FC<Props> = ({ path, toggleSidebar }) => {
     return (
         <header className='header'>
             <Modal {...modal} />
+            <Toast {...toast} />
             <Popover
                 {...popover}
                 position={{

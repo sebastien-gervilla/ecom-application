@@ -2,8 +2,8 @@
 
 // Applications
 import './page.scss';
-import { Confirmation, Header, LoaderWrapper, Modal, PageLayout, Pagination, Popover } from '@/components';
-import { useRequest, useLocalStorage, useModal, usePagination, usePopover } from '@/hooks';
+import { Confirmation, Header, LoaderWrapper, Modal, PageLayout, Pagination, Popover, Toast } from '@/components';
+import { useRequest, useLocalStorage, useModal, usePagination, usePopover, useToast } from '@/hooks';
 import { orderService, OrderService } from '@/services/order-service';
 import { Column, DataTable } from '@/modules/data-table';
 import { EllipsisVertical, FileText, PencilIcon, Trash2 } from 'lucide-react';
@@ -37,6 +37,7 @@ const ProductsScreen = () => {
 
 const Products = () => {
 
+    const toast = useToast();
     const popover = usePopover();
     const modal = useModal();
 
@@ -94,8 +95,11 @@ const Products = () => {
                     const response = await orderService.products.create(form);
                     if (response.is(201)) {
                         modal.close();
+                        toast.openDefaultSuccess();
                         return productsResponse.refresh();
                     }
+
+                    toast.openDefaultFailure();
                 }}
             />
         );
@@ -109,8 +113,11 @@ const Products = () => {
                     const response = await orderService.products.update(product.id, form);
                     if (response.is(204)) {
                         modal.close();
+                        toast.openDefaultSuccess();
                         return productsResponse.refresh();
                     }
+
+                    toast.openDefaultFailure();
                 }}
             />
         );
@@ -123,8 +130,11 @@ const Products = () => {
                     const response = await orderService.products.delete(product.id);
                     if (response.is(204)) {
                         modal.close();
+                        toast.openDefaultSuccess();
                         return productsResponse.refresh();
                     }
+
+                    toast.openDefaultFailure();
                 }}
                 onCancel={modal.close}
             />
@@ -190,6 +200,7 @@ const Products = () => {
                 }}
             />
             <Modal {...modal} />
+            <Toast {...toast} />
             <div className="content">
                 <div className="header">
                     <div className="filters">

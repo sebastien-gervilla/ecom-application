@@ -4,8 +4,8 @@ import { CircleX, EllipsisVertical, FileText, Truck } from 'lucide-react';
 
 // Applications
 import './page.scss';
-import { Confirmation, Header, LoaderWrapper, Modal, PageLayout, Pagination, Popover } from '@/components';
-import { useRequest, useLocalStorage, useModal, usePagination, usePopover } from '@/hooks';
+import { Confirmation, Header, LoaderWrapper, Modal, PageLayout, Pagination, Popover, Toast } from '@/components';
+import { useRequest, useLocalStorage, useModal, usePagination, usePopover, useToast } from '@/hooks';
 import { orderService, OrderService } from '@/services/order-service';
 import { Column, DataTable } from '@/modules/data-table';
 import { OrderProducts } from './components';
@@ -37,6 +37,7 @@ const OrdersScreen = () => {
 
 const Orders = () => {
 
+    const toast = useToast()
     const popover = usePopover();
     const modal = useModal();
 
@@ -96,8 +97,11 @@ const Orders = () => {
                     const response = await orderService.orders.ship(order.id);
                     if (response.is(204)) {
                         modal.close();
+                        toast.openDefaultSuccess();
                         return ordersResponse.refresh();
                     }
+
+                    toast.openDefaultFailure();
                 }}
                 onCancel={modal.close}
             />
@@ -111,8 +115,11 @@ const Orders = () => {
                     const response = await orderService.orders.cancel(order.id);
                     if (response.is(204)) {
                         modal.close();
+                        toast.openDefaultSuccess();
                         return ordersResponse.refresh();
                     }
+
+                    toast.openDefaultFailure();
                 }}
                 onCancel={modal.close}
             />
@@ -177,6 +184,7 @@ const Orders = () => {
                 }}
             />
             <Modal {...modal} />
+            <Toast {...toast} />
             <div className="content">
                 <div className="header">
                     <div className="filters">
