@@ -1,18 +1,21 @@
 // Librairies
 import { FC, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { SearchIcon, X } from 'lucide-react';
 
 // Application
 import './search.scss';
-import { useRequest } from '@/hooks';
+import { useModal, useRequest } from '@/hooks';
 import { orderService, OrderService } from '@/services/order-service';
+import { ProductSheet } from '@/pages/products/components';
+import { Modal } from '../Modal';
 
 interface Props {
     onClose: () => void;
 }
 
 const Search: FC<Props> = ({ onClose }) => {
+
+    const modal = useModal();
 
     const timeoutReference = useRef<NodeJS.Timeout | null>(null);
     const inputReference = useRef<HTMLInputElement>(null);
@@ -36,15 +39,24 @@ const Search: FC<Props> = ({ onClose }) => {
         timeoutReference.current = setTimeout(() => setDebouncedSearch(value), 250);
     }
 
+    const handleShowProductSheet = (product: OrderService.Models.Product.Get) => {
+        modal.openWith(
+            <ProductSheet
+                product={product}
+                onBack={modal.close}
+            />
+        );
+    }
+
     const displayItems = () => {
         return products.map(product => (
-            <Link
+            <button
                 key={product.id}
-                to={`/items/${product.reference}`}
                 className="item menu-item"
+                onClick={() => handleShowProductSheet(product)}
             >
-                {product.reference}
-            </Link>
+                {product.name}
+            </button>
         ))
     }
 
@@ -56,6 +68,7 @@ const Search: FC<Props> = ({ onClose }) => {
 
     return (
         <div className='search'>
+            <Modal {...modal} />
             <div className="header">
                 <div className="search-bar">
                     <SearchIcon />

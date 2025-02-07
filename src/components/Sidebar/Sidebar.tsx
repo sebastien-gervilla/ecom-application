@@ -69,16 +69,6 @@ const Sidebar: FC<Props> = ({ isReduced }) => {
                     <MoveRight />
                     <p>Recherche globale</p>
                 </div>
-                <div className="shortcut">
-                    <div className='key'>
-                        <p>CTRL</p>
-                    </div>
-                    <div className='key'>
-                        <p>B</p>
-                    </div>
-                    <MoveRight />
-                    <p>Naviguer vers une référence</p>
-                </div>
             </div>
         );
     }
