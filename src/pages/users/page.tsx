@@ -49,10 +49,6 @@ const Users = () => {
     const users = usersResponse.response?.is(200) ? usersResponse.response.body.data : [];
     const pages = usersResponse.response?.is(200) ? usersResponse.response.body.meta.pagination.pages : 0;
 
-    const handleActionClick = (_: OrderService.Models.User.Get) => {
-
-    }
-
     return (
         <LoaderWrapper className='users' isLoading={usersResponse.isLoading}>
             <Popover
@@ -80,7 +76,6 @@ const Users = () => {
                 </div>
                 <UsersTable
                     rows={users}
-                    onActionClick={handleActionClick}
                 />
                 <div className="footer">
                     <Pagination

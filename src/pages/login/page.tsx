@@ -1,6 +1,6 @@
 // Libraries
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Coffee, Eye, EyeOff } from 'lucide-react';
 
 // Application
@@ -102,6 +102,9 @@ const Login = () => {
                     >
                         Se connecter
                     </button>
+                    <p style={{ display: 'flex', gap: 8 }}>
+                        Pas encore inscrit ? <Link to='/register' style={{ textDecoration: 'underline' }}>Créer un compte</Link>
+                    </p>
                 </div>
             </div>
         </section>

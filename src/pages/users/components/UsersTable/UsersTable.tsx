@@ -1,5 +1,5 @@
 // Librairies
-import { FC, JSX, MouseEvent, ReactNode } from 'react';
+import { FC, JSX, ReactNode } from 'react';
 
 // Application
 import {
@@ -11,11 +11,9 @@ import {
     TableRow,
 } from '@/components/Table';
 import { OrderService } from '@/services/order-service';
-import { EllipsisVertical } from 'lucide-react';
 
 interface Props {
     rows: OrderService.Models.User.Get[];
-    onActionClick: (user: OrderService.Models.User.Get, event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 interface Column<TData> {
@@ -32,7 +30,7 @@ interface CellContext<TData> {
     row: TData;
 }
 
-const UsersTable: FC<Props> = ({ rows, onActionClick }) => {
+const UsersTable: FC<Props> = ({ rows }) => {
 
     const columns: Column<OrderService.Models.User.Get>[] = [
         {
@@ -69,18 +67,6 @@ const UsersTable: FC<Props> = ({ rows, onActionClick }) => {
                 <div className="lowercase" style={{ textTransform: 'capitalize' }}>
                     {row.role}
                 </div>
-            ),
-        },
-        {
-            key: 'actions',
-            header: '',
-            cell: ({ row }) => (
-                <button
-                    className='icon-button'
-                    onClick={(event) => onActionClick(row, event)}
-                >
-                    <EllipsisVertical />
-                </button>
             ),
         },
     ];
