@@ -6,9 +6,9 @@ import { Confirmation, Header, LoaderWrapper, Modal, PageLayout, Pagination, Pop
 import { useRequest, useLocalStorage, useModal, usePagination, usePopover } from '@/hooks';
 import { orderService, OrderService } from '@/services/order-service';
 import { Column, DataTable } from '@/modules/data-table';
-import { EllipsisVertical, PencilIcon, Trash2 } from 'lucide-react';
+import { EllipsisVertical, FileText, PencilIcon, Trash2 } from 'lucide-react';
 import { MouseEvent } from 'react';
-import { ProductForm } from './components';
+import { ProductForm, ProductSheet } from './components';
 
 const ProductsScreen = () => {
 
@@ -57,6 +57,13 @@ const Products = () => {
             <div className="action-menu menu">
                 <button
                     className='menu-item'
+                    onClick={() => handleShowProduct(product)}
+                >
+                    <FileText />
+                    Fiche
+                </button>
+                <button
+                    className='menu-item'
                     onClick={() => handleEditProduct(product)}
                 >
                     <PencilIcon />
@@ -71,6 +78,12 @@ const Products = () => {
                 </button>
             </div>
         ));
+    }
+
+    const handleShowProduct = (product: OrderService.Models.Product.Get) => {
+        modal.openWith(
+            <ProductSheet product={product} />
+        )
     }
 
     const handleNewProduct = () => {

@@ -8,7 +8,6 @@ import { orderService, OrderService } from '@/services/order-service';
 import { Column, DataTable } from '@/modules/data-table';
 import { EllipsisVertical, PencilIcon, Trash2 } from 'lucide-react';
 import { MouseEvent } from 'react';
-import { ProductForm } from './components';
 
 const OrdersScreen = () => {
 
@@ -75,31 +74,13 @@ const Orders = () => {
 
     const handleNewProduct = () => {
         modal.openWith(
-            <ProductForm
-                initialForm={defaultProduct}
-                onSubmit={async (form) => {
-                    const response = await orderService.products.create(form);
-                    if (response.is(201)) {
-                        modal.close();
-                        return productsResponse.refresh();
-                    }
-                }}
-            />
+            null
         );
     }
 
-    const handleEditProduct = (product: OrderService.Models.Product.Get) => {
+    const handleEditProduct = (_: OrderService.Models.Product.Get) => {
         modal.openWith(
-            <ProductForm
-                initialForm={product}
-                onSubmit={async (form) => {
-                    const response = await orderService.products.update(product.id, form);
-                    if (response.is(204)) {
-                        modal.close();
-                        return productsResponse.refresh();
-                    }
-                }}
-            />
+            null
         );
     }
 
@@ -209,14 +190,5 @@ const Orders = () => {
 }
 
 const pageSizeOptions = [50, 100, 200];
-
-const defaultProduct: OrderService.Models.Product.Create = {
-    name: '',
-    reference: '',
-    description: '',
-    price: 0,
-    stock: 0,
-    url: '',
-}
 
 export default OrdersScreen;

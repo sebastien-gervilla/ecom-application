@@ -2,26 +2,13 @@ import { Models } from "@/services/order-service/interfaces";
 
 export interface Get {
     id: number;
-    products: Models.Product.Get[];
+    products: Models.OrderProduct.Get[];
     status: Status;
 }
 
 export interface Create {
-    name: string;
-    reference: string;
-    description: string;
-    price: number;
-    stock: number;
-    url: string;
-}
-
-export interface Put {
-    name: string;
-    reference: string;
-    description: string;
-    price: number;
-    stock: number;
-    url: string;
+    id: number;
+    quantity: number;
 }
 
 export enum Status {

@@ -1,0 +1,48 @@
+@use '@/styles/theme' as *;
+
+.product-sheet {
+    display: flex;
+    gap: 32px;
+
+    width: 700px;
+    padding: 32px;
+
+    img {
+        width: 250px;
+
+        border: 1px solid $grey-700;
+    }
+
+    .informations {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        p {
+            &.name {
+                font-size: $size-28;
+                font-weight: 500;
+            }
+
+            &.price {
+                font-size: $size-24;
+                font-weight: 300;
+            }
+
+            &.description {
+                font-size: $size-18;
+            }
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+
+            margin-top: auto;
+
+            .number-field {
+                width: 70px;
+            }
+        }
+    }
+}

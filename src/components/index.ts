@@ -14,3 +14,6 @@ export { Modal } from './Modal';
 export { Toast } from './Toast';
 export { Snackbar } from './Snackbar';
 export { Confirmation } from './Confirmation';
+
+// Specifics
+export { Cart } from './Cart';

@@ -5,4 +5,10 @@ export interface ApplicationStorage {
     'is-sidebar-reduced': boolean;
     'token': string;
     'theme': Theme;
+    'cart': {
+        id: number;
+        name: string;
+        price: number;
+        quantity: number;
+    }[];
 }
